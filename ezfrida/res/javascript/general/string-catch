@@ -1,0 +1,10 @@
+// Taken from Mobile Security Framework (Thank you!)
+// Source: https://github.com/MobSF/Mobile-Security-Framework-MobSF/blob/master/mobsf/DynamicAnalyzer/tools/frida_scripts/auxiliary/string_catch.js
+  ['java.lang.StringBuilder', 'java.lang.StringBuffer'].forEach(function(clazz, i) {
+      var func = 'toString';
+      Java.use(clazz)[func].implementation = function() {
+        var ret = this[func]();
+        send('[String Catch] [' + i + '] ' + ret);
+        return ret;
+      }
+    });
